@@ -159,6 +159,11 @@ import UIKit
                 return
             }
             
+            guard !Task.isCancelled else {
+                print("Cancelled by Task.")
+                return
+            }
+            
             await MainActor.run { [weak self] in
                 guard !Task.isCancelled else {
                     print("Cancelled by Task.")
