@@ -104,7 +104,7 @@ import UIKit
         imageView.isHidden = true
         imageView.image = nil
         
-        loadingImageTask = .detached(priority: .high) { [weak self] in
+        loadingImageTask = .detached { [weak self] in
             let options: PHImageRequestOptions = .init()
             options.isSynchronous = false
             options.deliveryMode = .highQualityFormat
