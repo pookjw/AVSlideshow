@@ -123,8 +123,8 @@ actor PhotosViewModel: NSObject {
         selectedCollectionSubject.send(collection)
     }
     
-    func exportVideo(selectedIndexPaths: [IndexPath]) async throws {
-        let maxTaskGroup: MaxTaskGroup = .init(maxTaskCount: selectedIndexPaths.count, totalCount: 3) { index in
+    func exportVideo(indexPaths: [IndexPath]) async throws {
+        let maxTaskGroup: MaxTaskGroup = .init(maxTaskCount: indexPaths.count, totalCount: 3) { index in
             
         }
     }

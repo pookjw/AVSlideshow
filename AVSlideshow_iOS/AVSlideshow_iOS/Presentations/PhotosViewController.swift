@@ -242,14 +242,10 @@
         albumButton.sizeToFit()
     }
     
-    private func exportVideoWithSelectedItems() {
-        guard let indexPathsForSelectedItems: [IndexPath] = collectionView.indexPathsForSelectedItems else {
-            return
-        }
-        
+    private func exportVideo(indexPaths: [IndexPath]) {
         Task.detached { [weak self] in
             do {
-                try await self?.viewModel.exportVideo(selectedIndexPaths: indexPathsForSelectedItems)
+                try await self?.viewModel.exportVideo(indexPaths: indexPaths)
             } catch {
                 
             }
@@ -270,7 +266,7 @@ extension PhotosViewController: UICollectionViewDelegate {
                 title: "Export as Slideshow",
                 image: .init(systemName: "square.and.arrow.up")
             ) { [weak self] _ in
-                self?.exportVideoWithSelectedItems()
+                self?.exportVideo(indexPaths: indexPaths)
             }
             
             children.append(action)
