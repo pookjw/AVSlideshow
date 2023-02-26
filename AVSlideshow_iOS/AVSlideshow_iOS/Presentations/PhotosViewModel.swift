@@ -22,6 +22,7 @@ actor PhotosViewModel: NSObject {
     private var selectedCollectionAssets: PHFetchResult<PHAsset>?
     private var smartAlbumCollections: PHFetchResult<PHAssetCollection>?
     private var albumCollections: PHFetchResult<PHAssetCollection>?
+    private let slideshowService: SlideshowService = .init()
     
     init(dataSoure: UICollectionViewDiffableDataSource<PhotosSectionModel, PhotosItemModel>) {
         self.dataSoure = dataSoure
@@ -120,6 +121,12 @@ actor PhotosViewModel: NSObject {
         
         await dataSoure.apply(snapshot, animatingDifferences: true)
         selectedCollectionSubject.send(collection)
+    }
+    
+    func exportVideo(selectedIndexPaths: [IndexPath]) async throws {
+        let maxTaskGroup: MaxTaskGroup = .init(maxTaskCount: selectedIndexPaths.count, totalCount: 3) { index in
+            
+        }
     }
     
     private func requestAuthorization(authorizationStatus: PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus(for: .readWrite)) async throws {

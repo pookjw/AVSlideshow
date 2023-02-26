@@ -18,6 +18,8 @@
 		4F6D148D29AA1FE200FA23DF /* PhotosContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6D148C29AA1FE200FA23DF /* PhotosContentConfiguration.swift */; };
 		4F6D148F29AA1FED00FA23DF /* PhotosContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6D148E29AA1FED00FA23DF /* PhotosContentView.swift */; };
 		4F6D149129AA359C00FA23DF /* PhotosCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6D149029AA359C00FA23DF /* PhotosCollectionViewLayout.swift */; };
+		4F6D149529AB85A000FA23DF /* SlideshowService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6D149429AB85A000FA23DF /* SlideshowService.swift */; };
+		4F6D149729AB875B00FA23DF /* MaxTaskGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6D149629AB875B00FA23DF /* MaxTaskGroup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		4F6D148C29AA1FE200FA23DF /* PhotosContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosContentConfiguration.swift; sourceTree = "<group>"; };
 		4F6D148E29AA1FED00FA23DF /* PhotosContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosContentView.swift; sourceTree = "<group>"; };
 		4F6D149029AA359C00FA23DF /* PhotosCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewLayout.swift; sourceTree = "<group>"; };
+		4F6D149429AB85A000FA23DF /* SlideshowService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshowService.swift; sourceTree = "<group>"; };
+		4F6D149629AB875B00FA23DF /* MaxTaskGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxTaskGroup.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +72,7 @@
 			children = (
 				4F6D148429AA100800FA23DF /* Application */,
 				4F6D148329AA0FFD00FA23DF /* Resources */,
+				4F6D149329AB858E00FA23DF /* Services */,
 				4F6D148529AA101700FA23DF /* Presentations */,
 			);
 			path = AVSlideshow_iOS;
@@ -104,6 +109,15 @@
 				4F6D148E29AA1FED00FA23DF /* PhotosContentView.swift */,
 			);
 			path = Presentations;
+			sourceTree = "<group>";
+		};
+		4F6D149329AB858E00FA23DF /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4F6D149429AB85A000FA23DF /* SlideshowService.swift */,
+				4F6D149629AB875B00FA23DF /* MaxTaskGroup.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,11 +190,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F6D149529AB85A000FA23DF /* SlideshowService.swift in Sources */,
 				4F6D148929AA12E700FA23DF /* PhotosSectionModel.swift in Sources */,
 				4F6D149129AA359C00FA23DF /* PhotosCollectionViewLayout.swift in Sources */,
 				4F6D147429AA0FD100FA23DF /* PhotosViewController.swift in Sources */,
 				4F6D148729AA10E800FA23DF /* PhotosViewModel.swift in Sources */,
 				4F6D148D29AA1FE200FA23DF /* PhotosContentConfiguration.swift in Sources */,
+				4F6D149729AB875B00FA23DF /* MaxTaskGroup.swift in Sources */,
 				4F6D147029AA0FD100FA23DF /* AppDelegate.swift in Sources */,
 				4F6D148F29AA1FED00FA23DF /* PhotosContentView.swift in Sources */,
 				4F6D147229AA0FD100FA23DF /* SceneDelegate.swift in Sources */,

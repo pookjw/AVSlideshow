@@ -241,8 +241,42 @@
         albumButton.configuration = configuration
         albumButton.sizeToFit()
     }
+    
+    private func exportVideoWithSelectedItems() {
+        guard let indexPathsForSelectedItems: [IndexPath] = collectionView.indexPathsForSelectedItems else {
+            return
+        }
+        
+        Task.detached { [weak self] in
+            do {
+                try await self?.viewModel.exportVideo(selectedIndexPaths: indexPathsForSelectedItems)
+            } catch {
+                
+            }
+        }
+    }
 }
 
 extension PhotosViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+        .init(
+            identifier: indexPaths as NSArray
+        ) { 
+            nil
+        } actionProvider: { children in
+            var children: [UIMenuElement] = children
+            
+            let action: UIAction = .init(
+                title: "Export as Slideshow",
+                image: .init(systemName: "square.and.arrow.up")
+            ) { [weak self] _ in
+                self?.exportVideoWithSelectedItems()
+            }
+            
+            children.append(action)
+            
+            let menu: UIMenu = .init(children: children)
+            return menu
+        }
+    }
 }
