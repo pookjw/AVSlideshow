@@ -298,7 +298,7 @@ actor PhotosViewModel: NSObject {
 
 extension PhotosViewModel: PHPhotoLibraryChangeObserver {
     nonisolated func photoLibraryDidChange(_ changeInstance: PHChange) {
-        Task {
+        Task.detached { [self] in
             await updateDataSource(for: changeInstance)
         }
     }
