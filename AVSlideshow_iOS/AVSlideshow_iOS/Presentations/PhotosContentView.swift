@@ -175,6 +175,7 @@ import UIKit
                 self.imageView.isHidden = false
                 self.imageView.image = image
                 self.imageView.alpha = .zero
+                self.currentRequestID = nil
                 UIView.animate(withDuration: 0.1) { 
                     self.imageView.alpha = 1.0
                 }
