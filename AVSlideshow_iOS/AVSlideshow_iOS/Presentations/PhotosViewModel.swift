@@ -26,7 +26,10 @@ actor PhotosViewModel {
     func loadDataSource() async throws {
         try await requestAuthorization()
         
-        let imageAssets: PHFetchResult<PHAsset> = PHAsset.fetchAssets(with: .image, options: nil)
+        let imageOptions: PHFetchOptions = .init()
+        imageOptions.sortDescriptors = [.init(key: #keyPath(PHAsset.creationDate), ascending: false)]
+        
+        let imageAssets: PHFetchResult<PHAsset> = PHAsset.fetchAssets(with: .image, options: imageOptions)
         var snapshot: NSDiffableDataSourceSnapshot<PhotosSectionModel, PhotosItemModel> = .init()
         let sectionModel: PhotosSectionModel = .init(sectionType: .images)
         
@@ -41,12 +44,11 @@ actor PhotosViewModel {
         
         //
         
-        let options: PHFetchOptions = .init()
-        let sortDescriptor: NSSortDescriptor = .init(key: #keyPath(PHAssetCollection.localizedTitle), ascending: true)
-        options.sortDescriptors = [sortDescriptor]
+        let albumOptions: PHFetchOptions = .init()
+        albumOptions.sortDescriptors = [.init(key: #keyPath(PHAssetCollection.localizedTitle), ascending: true)]
         
-        let smartAlbumCollections: PHFetchResult<PHAssetCollection> = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .any, options: options)
-        let albumCollections: PHFetchResult<PHAssetCollection> = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: options)
+        let smartAlbumCollections: PHFetchResult<PHAssetCollection> = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .any, options: albumOptions)
+        let albumCollections: PHFetchResult<PHAssetCollection> = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .any, options: albumOptions)
         
         var results: [PHAssetCollectionType : [PHAssetCollection]] = [:]
         
