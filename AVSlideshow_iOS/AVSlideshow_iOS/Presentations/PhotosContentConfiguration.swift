@@ -8,8 +8,9 @@
 import UIKit
 import Photos
 
-@MainActor struct PhotosContentConfiguration: UIContentConfiguration, Hashable {
+@MainActor struct PhotosContentConfiguration: UIContentConfiguration {
     let asset: PHAsset
+    let isSelected: Bool
     
     func makeContentView() -> UIView & UIContentView {
         PhotosContentView(ownConfiguration: self)

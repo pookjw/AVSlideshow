@@ -12,24 +12,24 @@ import UIKit
 @MainActor final class PhotosContentView: UIView {
     private var imageView: UIImageView!
     private var progressView: UIProgressView!
+    private var selectionImageView: UIImageView!
     
     private var loadingImageTask: Task<Void, Never>?
     private var currentRequestID: PHImageRequestID?
     
     private var boundsChangesTask: Task<Void?, Never>?
     
-    private var ownConfiguration: PhotosContentConfiguration! {
-        didSet {
-            updateUI()
-        }
-    }
+    private var ownConfiguration: PhotosContentConfiguration!
     
     init(ownConfiguration: PhotosContentConfiguration!) {
         super.init(frame: .null)
         self.ownConfiguration = ownConfiguration
         setupImageView()
         setupProgressView()
+        setupSelectionImageView()
         bind()
+        updateImage()
+        updateSelectionImage()
     }
     
     @available(*, unavailable)
@@ -46,16 +46,10 @@ import UIKit
         let imageView: UIImageView = .init()
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
+        imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         addSubview(imageView)
-        NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: topAnchor),
-            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
         
         self.imageView = imageView
     }
@@ -75,6 +69,16 @@ import UIKit
         self.progressView = progressView
     }
     
+    private func setupSelectionImageView() {
+        let selectionImageView: UIImageView = .init(frame: bounds)
+        selectionImageView.tintColor = .white
+        selectionImageView.backgroundColor = .systemPurple.withAlphaComponent(0.5)
+        selectionImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        addSubview(selectionImageView)
+        self.selectionImageView = selectionImageView
+    }
+    
     private func bind() {
         let stream: AsyncPublisher<AnyPublisher<CGRect, Never>> = publisher(for: \.frame, options: [.new])
             .removeDuplicates()
@@ -84,12 +88,12 @@ import UIKit
         
         boundsChangesTask = .detached { [weak self] in
             for await _ in stream {
-                await self?.updateUI()
+                await self?.updateImage()
             }
         }
     }
     
-    private func updateUI() {
+    private func updateImage() {
         if let currentRequestID: PHImageRequestID {
             PHImageManager.default().cancelImageRequest(currentRequestID)
         }
@@ -182,6 +186,16 @@ import UIKit
             }
         }
     }
+    
+    private func updateSelectionImage() {
+        if ownConfiguration.isSelected {
+            selectionImageView.image = .init(systemName: "checkmark")
+            selectionImageView.isHidden = false
+        } else {
+            selectionImageView.image = nil
+            selectionImageView.isHidden = true
+        }
+    }
 }
 
 extension PhotosContentView: UIContentView {
@@ -190,13 +204,18 @@ extension PhotosContentView: UIContentView {
             ownConfiguration
         }
         set {
+            let oldConfiguration: PhotosContentConfiguration = ownConfiguration
             let newConfiguration: PhotosContentConfiguration = newValue as! PhotosContentConfiguration
             
-            guard ownConfiguration != newConfiguration else {
-                return
+            ownConfiguration = newConfiguration
+            
+            if oldConfiguration.asset != newConfiguration.asset {
+                updateImage()
             }
             
-            ownConfiguration = newConfiguration
+            if oldConfiguration.isSelected != newConfiguration.isSelected {
+                updateSelectionImage()
+            }
         }
     }
     

@@ -38,6 +38,7 @@
         let collectionView: UICollectionView = .init(frame: view.bounds, collectionViewLayout: collectionViewLayout)
         
         collectionView.delegate = self
+        collectionView.allowsMultipleSelection = true
         
         view.addSubview(collectionView)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -122,8 +123,10 @@
     
     private func makeCellRegistration() -> UICollectionView.CellRegistration<UICollectionViewListCell, PhotosItemModel> {
         .init { cell, indexPath, itemIdentifier in
-            let contentConfiguration: PhotosContentConfiguration = .init(asset: itemIdentifier.asset)
-            cell.contentConfiguration = contentConfiguration
+            cell.configurationUpdateHandler = { cell, state in
+                let contentConfiguration: PhotosContentConfiguration = .init(asset: itemIdentifier.asset, isSelected: state.isSelected)
+                cell.contentConfiguration = contentConfiguration
+            }
         }
     }
     
