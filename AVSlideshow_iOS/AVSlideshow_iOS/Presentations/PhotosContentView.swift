@@ -143,14 +143,14 @@ import UIKit
                 }
             }
             
-            if let error: NSError = result.info?[PHImageErrorKey] as? NSError {
-                print(error)
-                return
-            } else if 
+            if 
                 let isCancelled: Bool = result.info?[PHImageCancelledKey] as? Bool,
                 isCancelled
             {
                 print("Cancelled by PHImageManager.")
+                return
+            } else if let error: NSError = result.info?[PHImageErrorKey] as? NSError {
+                print(error)
                 return
             }
             
