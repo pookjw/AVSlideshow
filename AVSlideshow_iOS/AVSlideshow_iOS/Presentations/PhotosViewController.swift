@@ -76,15 +76,18 @@
                     await self?.reloadAlbumButtonMenu(using: collections)
                 }
             } catch {
-                // TODO
-                fatalError("TODO")
+                fatalError(error.localizedDescription)
             }
         }
         
-        let selectedCollectionSubject: CurrentValueSubject<PHAssetCollection?, Never> = viewModel.selectedCollectionSubject
+        let selectedCollectionSubject: AnyPublisher<PHAssetCollection?, Never> = viewModel
+            .selectedCollectionSubject
+            .dropFirst()
+            .eraseToAnyPublisher()
         selectedCollectionSubjectTask = .detached { [weak self] in
             for await selectedCollection in selectedCollectionSubject.values {
                 await self?.reloadAlbumButtonMenu(selectedCollection: selectedCollection)
+                await self?.updateAlbumButton(isLoading: false)
             }
         }
     }
