@@ -127,10 +127,6 @@
             cell.contentConfiguration = contentConfiguration
             
             cell.configurationUpdateHandler = { cell, state in
-                guard state.isSelected != contentConfiguration.isSelected else {
-                    return
-                }
-                
                 let contentConfiguration: PhotosContentConfiguration = .init(asset: itemIdentifier.asset, isSelected: state.isSelected)
                 cell.contentConfiguration = contentConfiguration
             }
