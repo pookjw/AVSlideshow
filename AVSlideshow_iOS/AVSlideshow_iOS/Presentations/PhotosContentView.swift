@@ -143,9 +143,7 @@ import UIKit
                             contentMode: .aspectFill,
                             options: options
                         ) { image, options in
-                            autoreleasepool { 
-                                continuation.resume(with: .success((image, options)))
-                            }
+                            continuation.resume(with: .success((image, options)))
                         }
                 }
             }
