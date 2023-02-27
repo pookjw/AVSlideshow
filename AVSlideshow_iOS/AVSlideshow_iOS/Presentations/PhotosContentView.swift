@@ -82,7 +82,7 @@ import UIKit
     private func bind() {
         let stream: AsyncPublisher<AnyPublisher<CGRect, Never>> = publisher(for: \.frame, options: [.new])
             .removeDuplicates()
-            .debounce(for: 0.1, scheduler: DispatchQueue.main)
+            .debounce(for: 0.1, scheduler: DispatchQueue.global())
             .eraseToAnyPublisher()
             .values
         
