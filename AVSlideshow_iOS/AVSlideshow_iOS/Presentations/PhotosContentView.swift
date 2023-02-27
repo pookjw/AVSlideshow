@@ -123,7 +123,8 @@ import UIKit
             
             guard
                 let asset: PHAsset = await self?.ownConfiguration.asset,
-                let size: CGSize = await self?.bounds.size
+                let size: CGSize = await self?.imageView.bounds.size,
+                size != .zero
             else {
                 return
             }
