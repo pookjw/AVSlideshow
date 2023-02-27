@@ -123,7 +123,14 @@
     
     private func makeCellRegistration() -> UICollectionView.CellRegistration<UICollectionViewListCell, PhotosItemModel> {
         .init { cell, indexPath, itemIdentifier in
+            let contentConfiguration: PhotosContentConfiguration = .init(asset: itemIdentifier.asset, isSelected: false)
+            cell.contentConfiguration = contentConfiguration
+            
             cell.configurationUpdateHandler = { cell, state in
+                guard state.isSelected != contentConfiguration.isSelected else {
+                    return
+                }
+                
                 let contentConfiguration: PhotosContentConfiguration = .init(asset: itemIdentifier.asset, isSelected: state.isSelected)
                 cell.contentConfiguration = contentConfiguration
             }

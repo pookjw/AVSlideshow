@@ -108,7 +108,7 @@ import UIKit
             let options: PHImageRequestOptions = .init()
             options.isSynchronous = false
             options.deliveryMode = .highQualityFormat
-            options.resizeMode = .exact
+            options.resizeMode = .fast
             options.isNetworkAccessAllowed = true
             
             /*
@@ -142,7 +142,9 @@ import UIKit
                             contentMode: .aspectFill,
                             options: options
                         ) { image, options in
-                            continuation.resume(with: .success((image, options)))
+                            autoreleasepool { 
+                                continuation.resume(with: .success((image, options)))
+                            }
                         }
                 }
             }
