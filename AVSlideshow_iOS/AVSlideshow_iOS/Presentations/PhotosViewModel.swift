@@ -48,10 +48,13 @@ actor PhotosViewModel: NSObject {
         
         snapshot.appendSections([sectionModel])
         
+        var itemModels: [PhotosItemModel] = .init()
         imageAssets.enumerateObjects { asset, index, stopPointer in
             let itemModel: PhotosItemModel = .init(asset: asset)
-            snapshot.appendItems([itemModel], toSection: sectionModel)
+            itemModels.append(itemModel)
         }
+        
+        snapshot.appendItems(itemModels, toSection: sectionModel)
         
         await dataSoure.apply(snapshot, animatingDifferences: true)
         
